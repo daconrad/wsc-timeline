@@ -1,0 +1,328 @@
+:root {
+    --primary-color: rgba(15, 0, 0, 0.68);
+    --accent-color: rgb(230, 1, 0);
+    --bg-color: #fff;
+    --text-color: #333;
+    --card-bg: #fff;
+    --year-color: rgb(230, 1, 0);
+    --line-color: #3498db;
+    /* River blue */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.timeline-header {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--primary-color);
+    color: white;
+}
+
+.timeline-header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+/* Flex container for Nav + Timeline */
+.main-layout {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Sidebar Navigation */
+.year-nav {
+    position: sticky;
+    top: 50px;
+    height: calc(100vh - 100px);
+    width: 100px;
+    padding: 15px;
+    overflow-y: auto;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.year-nav a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 3px 7px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    opacity: 0.6;
+}
+
+.year-nav a:hover,
+.year-nav a.active {
+    background-color: var(--accent-color);
+    color: white;
+    opacity: 1;
+}
+
+.timeline-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+    flex-grow: 1;
+}
+
+/* SVG River */
+#timeline-river {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#river-path {
+    stroke: var(--line-color);
+    stroke-width: 8;
+    stroke-linecap: round;
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.1));
+}
+
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    background-color: transparent;
+    width: 50%;
+    margin-bottom: 30px;
+    z-index: 1;
+}
+
+/* Left side */
+.timeline-item.left {
+    left: 0;
+    text-align: right;
+}
+
+/* Right side */
+.timeline-item.right {
+    left: 50%;
+}
+
+/* Circles */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: -8px;
+    background-color: var(--card-bg);
+    border: 3px solid var(--accent-color);
+    top: 25px;
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 0 0 4px white;
+    /* gap from river */
+}
+
+.timeline-item.right::after {
+    left: -8px;
+}
+
+/* Content box */
+.content {
+    padding: 20px 30px;
+    background-color: var(--card-bg);
+    position: relative;
+    border-radius: 0px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.content:hover {
+    transform: translateY(-5px);
+}
+
+.content h2 {
+    color: var(--year-color);
+    font-size: 2.2rem;
+    position: absolute;
+    top: -15px;
+    opacity: 100;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.timeline-item.left .content h2 {
+    right: 20px;
+}
+
+.timeline-item.right .content h2 {
+    left: 20px;
+}
+
+
+.event {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    display: block;
+    /* Removed flex */
+}
+
+/* Clearfix for floated image - No longer needed with flex */
+/*
+.event::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+*/
+
+.event-body {
+    display: flex;
+    align-items: flex-start;
+}
+
+/* Reset left item styles since we aren't using flex anymore */
+.timeline-item.left .event {
+    text-align: right;
+}
+
+/* Reverse order for left items so image is on the 'inside' closer to timeline? 
+   Or user asked for image to the LEFT of content.
+   If item is on the left, left of content is further left (away from line).
+   If item is on the right, left of content is closer to line.
+   User just said "left of the event content". So standard flex row order.
+*/
+
+/* If we want left-aligned text on left side items, we should override or keep as is.
+   Currently .timeline-item.left has text-align: right.
+   This messes up the image/content flow if using flex row.
+   Let's force left-aligned text inside the event card for better readability if images are present?
+   Or keep right aligned text for left items but put image on the right?
+   Standard layout:
+   [Text Content] [Image] |Line| [Image] [Text Content]
+   User asked: "thumb... to the left of the event content".
+   This implies: [Image] [Text Content].
+   For right-side items: [Image] [Text Content] (Image is near line).
+   For left-side items: [Image] [Text Content] (Image is away from line).
+   
+   If text-align is right on left items, content will float right.
+*/
+
+/* Actually, standard design is usually image near the center line.
+   Left Item: [Content] [Image] -- |
+   Right Item: | -- [Image] [Content]
+   
+   But user request "Left of content" specifically.
+   Let's stick to literal request: [Image] [Content]
+*/
+
+.event-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid #eee;
+    /* Removed float */
+    margin-right: 15px;
+    /* Spacing between image and text */
+}
+
+.event-details {
+    flex-grow: 1;
+}
+
+.event:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.event h3 {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.event p {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+    .main-layout {
+        display: block;
+        /* Stack nav and timeline */
+    }
+
+    .year-nav {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        overflow-x: auto;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 15px 10px;
+        z-index: 100;
+        border-bottom: 1px solid #eee;
+        backdrop-filter: blur(5px);
+        white-space: nowrap;
+    }
+
+    .year-nav a {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    /* Full-width container */
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+
+    /* Make sure all items are on the right relative to the line */
+    .timeline-item.left,
+    .timeline-item.right {
+        left: 0;
+        text-align: left;
+    }
+
+    .timeline-item.left .event {
+        text-align: left;
+    }
+
+    /* Adjust circle position */
+    .timeline-item.left::after,
+    .timeline-item.right::after {
+        left: 23px;
+        /* Align with mobile river center (31px) - radius(8) = 23 */
+        right: auto;
+    }
+
+    .timeline-item.left .content h2,
+    .timeline-item.right .content h2 {
+        left: auto;
+        right: 20px;
+    }
+}

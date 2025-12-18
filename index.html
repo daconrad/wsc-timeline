@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WSC Timeline</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="timeline-header">
+        <h1>WSC History Timeline</h1>
+        <p>A history of conservation and advocacy.</p>
+    </header>
+
+    <div class="main-layout">
+        <nav class="year-nav" id="yearNav">
+            <!-- Nav items injected by JS -->
+        </nav>
+
+        <div class="timeline-container" id="timeline">
+            <svg id="timeline-river" xmlns="http://www.w3.org/2000/svg">
+                <path id="river-path" fill="none" stroke="#3498db" stroke-width="6" />
+            </svg>
+            <!-- Timeline items will be injected here by JS -->
+        </div>
+    </div>
+
+    <!-- Load data first -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
