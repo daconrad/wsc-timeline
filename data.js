@@ -4,6 +4,7 @@ const timelineData = [
     events: [
       {
         title: "WSC Established",
+        image: "original-wsc-logo.png",
         content: "The WSC is planned in 2000 and established in 2001 by a diverse group of conservation minded anglers due to closures of North Puget Sound Streams, including the Skagit."
       },
       {
@@ -124,12 +125,14 @@ const timelineData = [
     year: "2011",
     events: [
       {
-        title: "WSC Organizes Steelhead Summit Topic: A Wild Elwha River",
-        content: "WSC brings together stakeholders hosting and sponsors SSA centering around the \"Future of Native Fisheries on the Elwha\" post dam removal."
+        title: "New Identity",
+        image: "wsc-logo.png",
+        content: ""
       },
       {
-        title: "WILDSTEELHEAD New Identity",
-        content: ""
+        title: "WSC Organizes Steelhead Summit Topic: A Wild Elwha River",
+        content: "WSC brings together stakeholders hosting and sponsors SSA centering around the \"Future of Native Fisheries on the Elwha\" post dam removal."
+
       }
     ]
   },
@@ -219,7 +222,7 @@ const timelineData = [
         content: "WSC partners to develop Hoh River Sonar to better understand run sizes using sonar technology. WSC donates equipment major funding for development."
       },
       {
-        title: "WSC develops a campaign series researching the hay days of Puget Sound steelhead, it’s demise and resurrection for the future of fish and anglers.",
+        title: "WSC develops a campaign series researching the hay days of Puget Sound steelhead, its demise and resurrection for the future of fish and anglers.",
         content: ""
       }
     ]
